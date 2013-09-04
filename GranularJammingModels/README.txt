@@ -1,0 +1,1 @@
+This folder contains all the models, research, etc for the granular jamming pads.

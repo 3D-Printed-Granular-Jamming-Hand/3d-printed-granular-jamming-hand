@@ -1,0 +1,1 @@
+This folder contains scholarly articles on cutting edge prosthetic hands.

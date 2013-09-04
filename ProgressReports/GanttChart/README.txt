@@ -1,0 +1,1 @@
+This is the Gantt chart, the method we will be using to plan out the rest of our time with this project.
