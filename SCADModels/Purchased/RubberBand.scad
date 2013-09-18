@@ -54,7 +54,7 @@ BandKeepaway();
 //test
 difference()
 {
-	//cube([20,15,10], center=true);
+	//cube([20,10,10], center=true);
 	translate([-5,-4,1])
 	{
 	//BandKeepaway();
