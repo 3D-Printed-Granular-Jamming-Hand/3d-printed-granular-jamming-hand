@@ -1,0 +1,1 @@
+This folder contains information on hands, hand muscle structure, skeletal structure, etc
