@@ -1,0 +1,31 @@
+
+ALWAYS SYNC FIRST in the git app, this will update any files that your groupmates have changed since you last checked. The sync button is blue and will be immediately to the right of the header (which is gray and reads 3D-Printed-Granular-Jamming-Hand)
+
+
+Open your 3D-Printed-Granular-Jamming-Hand folder on your computer and add files, edit files, whatever you would do with a normal folder.
+When you’re done making a change (i.e. any time you create or save a file), go back to the git app.
+
+
+If it says you'res “up to date” immediately to the right of the header (where sync usually is), hit “refresh” and see if it tells you to sync. If it does, you should sync again.
+
+
+In the top right, there should be a gray box with blue text (or a yellow box) saying “uncommitted changes” Click on the box.
+
+
+
+This will show all changes you’ve made on the left side of the app.
+Now go to the “COMMIT MESSAGE (REQUIRED)” text box, and type a short message describing what you did. If you need more in-depth description, put that in the “EXTENDED DESCRIPTION (OPTIONAL)”.
+
+
+Click the “commit” button below those boxes. This commits the file to your machine.
+
+
+Then hit sync again! DON'T FORGET THIS STEP or we won't get your new update (this sync sends your change out to the internet).
+
+
+
+
+
+
+
+And that's it! You've successfully sent out your updates!
