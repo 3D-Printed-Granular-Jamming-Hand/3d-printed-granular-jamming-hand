@@ -1,29 +1,6 @@
 use <../Tolerances/PlasticWidth.scad>
 use <../Purchased/RubberBand.scad>
 
-
-//this is just finger copied over kind of disorganized but I'll get to neatening it up
-
-//ignore this file
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //finger size values are based on the research in the "real hands" folder
 
 function FingerTipLength(tolerance=0)=17.4+tolerance;

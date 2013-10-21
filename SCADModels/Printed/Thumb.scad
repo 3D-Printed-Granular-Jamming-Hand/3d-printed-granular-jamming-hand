@@ -1,10 +1,13 @@
 use <../Tolerances/PlasticWidth.scad>
 use <../Purchased/RubberBand.scad>
 
+//I'll put the thumb in this file when I have enough thumb data
 
-//this is just finger copied over kind of disorganized but I'll get to neatening it up
+//right now it's just the finger code copied over
 
-//ignore this file
+//plz ignore
+
+
 
 
 
@@ -202,15 +205,7 @@ union()
 	}
 	}
 
-	translate([HingeDepth()*2-PlasticWidth()*1.5,FingerTipWidth()/2,FingerTipHeight()-PlasticWidth()*2])
-	{
-	rotate([0,90,0])
-	{
-
-	}
-}
-  
-
+	
 }
 
 }
