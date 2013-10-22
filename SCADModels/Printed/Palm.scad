@@ -1,5 +1,5 @@
 use <../Tolerances/PlasticWidth.scad>
-use <Fingertip.scad>
+use <Finger.scad>
 
 //didn't bother making a hinge for the thumb because I don't know what it's actually shaped like (right now just using the default finger at a weird angle)
 
@@ -95,33 +95,7 @@ translate([HingeDepth()*1.5-PlasticWidth()*1.5,FingerBaseWidth()*3.5+3,FingerBas
 	}
 }
 
-module Hand()
-{
-union()
-{
 Palm();
-translate([PalmLength(),0,0])
-{
-	Finger();
-}
-translate([PalmLength(),FingerBaseWidth()+1,0])
-{
-	Finger();
-}
-translate([PalmLength(),FingerBaseWidth()*2+2,0])
-{
-	Finger();
-}
-translate([PalmLength(),FingerBaseWidth()*3+3,0])
-{
-	Finger();
-}
-}
-}
-Hand();
 
-translate([PalmLength()/3, PalmWidth()-HingeDepth(),0])
-rotate([0,0,50])
-{
-	Finger();
-}
+
+
