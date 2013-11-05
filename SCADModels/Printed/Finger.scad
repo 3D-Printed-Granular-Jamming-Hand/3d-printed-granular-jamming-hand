@@ -74,7 +74,7 @@ translate([FingerTipHeight()/4, 0, FingerTipHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+					#cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 				}
 			}
 }
@@ -114,7 +114,7 @@ translate([FingerTipHeight()/4, -1, FingerTipHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					cylinder(r=JointPinDiameter(1)/2, h=FingerTipWidth()+2, $fn=50);
+					#cylinder(r=JointPinDiameter(1)/2, h=FingerTipWidth()+2, $fn=50);
 				}
 			}
 difference()
@@ -242,7 +242,6 @@ union()
 }
 
 
-
 //FingerMid();
 
 //to check that the effective length is correct
@@ -339,4 +338,9 @@ translate([FingerBaseLength(),0,0])
 FingerBase();
 }
 }
+
 Finger();
+
+//translate([0,0,FingerBaseHeight()])
+//rotate([0,180,0])
+//Finger();
