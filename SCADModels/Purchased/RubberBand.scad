@@ -19,7 +19,8 @@ echo("CIRCUMFERENCE (in mm) IS", circumference());
 
 function BandWidth(tolerance=3dPrinterTolerance())=circumference()/6+tolerance*2; //slightly narrower than it is long
 function BandLength(tolerance=3dPrinterTolerance())=circumference()/3+tolerance*2;
-function BandThickness(tolerance=3dPrinterTolerance())=1+tolerance; //not sure how thick the rubber bands are yet so leaving 1 as a placeholder
+echo("BANDLENGTH (in mm) IS", BandLength());
+function BandThickness(tolerance=3dPrinterTolerance())=1+tolerance; //just measured the rubber bands they are in fact 1 mm wide
 function BandKeepAwayHeight(tolerance=3dPrinterTolerance())=BandThickness(tolerance)*3;
 
 module Band(tolerance=3dPrinterTolerance())

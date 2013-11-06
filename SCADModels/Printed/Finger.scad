@@ -1,5 +1,6 @@
 use <../Tolerances/PlasticWidth.scad>
 use <../Purchased/RubberBand.scad>
+use <../Purchased/Bearing.scad>
 
 //finger size values are based on the research in the "real hands" folder
 
@@ -7,9 +8,9 @@ function FingerTipLength(tolerance=0)=17.4+tolerance;
 function FingerTipWidth(tolerance=0)=19.75+tolerance;
 function FingerTipHeight(tolerance=0)=19.75+tolerance; //not sure how tall to make the fingers so I'm just making height the same as width for now. When I say tall, I mean looking at it from the side what is length from underside (where the palm/fingerprints are) to the upper part (where the knuckes/nails are)
 
-function JointPinDiameter(tolerance=0)=3+tolerance;
+function JointPinDiameter(tolerance=0)=BearingInnerDiameter(tolerance);
 
-function HingeDepth(tolerance=0)=10+tolerance;
+function HingeDepth(tolerance=0)=11+tolerance;
 
 
 
@@ -35,7 +36,7 @@ union()
 	{
 		union()
 		{
-			translate([0, FingerTipWidth(-tolerance)/4, 0])
+			translate([.5, FingerTipWidth(-tolerance)/4, 0])
 			{
 			cube([HingeDepth(tolerance)+1,FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)]);
 			}
@@ -47,7 +48,7 @@ union()
 }
 		translate([-1, FingerTipWidth(-tolerance)*3/8, -1])
 		{
-		cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/4, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)]);
+	cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/4, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)]);
 		}
 
 translate([-BandLength()/2,FingerTipWidth()/2-BandWidth()/2,FingerTipHeight()-BandKeepAwayHeight()+1])
@@ -74,7 +75,7 @@ translate([FingerTipHeight()/4, 0, FingerTipHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					#cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+					cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 				}
 			}
 }
@@ -85,14 +86,14 @@ translate([FingerTipHeight()/4, 0, FingerTipHeight()/2])
 
 
 //things to do: round the hinges so they don't intefere, add the joint pins, see if the rubber band keepaway will work right
-module NegativeHinge(tolerance=2)
+module NegativeHinge(tolerance=5)
 {
 
 union()
 {
 	difference()
 	{
-		translate([-HingeDepth(),0,0])
+		translate([-HingeDepth()-1.2,0,0])
 		{
 			cube([HingeDepth()*2, FingerTipWidth(), FingerTipHeight()]);
 		}
@@ -105,16 +106,16 @@ translate([-BandLength()/2,FingerTipWidth()/2-BandWidth()/2,FingerTipHeight()-Ba
 		{
 			BandKeepaway();
 		}
-translate([-HingeDepth(tolerance), FingerTipWidth(-tolerance/3)*3/8, -1])
+translate([-HingeDepth(tolerance),FingerTipWidth()*1/4, -1])
 		{
-cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/4, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)/2]);
+cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/2.5, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)/2]);
 }
 
 translate([FingerTipHeight()/4, -1, FingerTipHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					#cylinder(r=JointPinDiameter(1)/2, h=FingerTipWidth()+2, $fn=50);
+					cylinder(r=BearingOuterDiameter()/2, h=FingerTipWidth()+2, $fn=50);
 				}
 			}
 difference()
@@ -163,15 +164,15 @@ union()
 		cube([FingerTipLength()-PlasticWidth(), FingerTipWidth()-PlasticWidth()*2, FingerTipHeight()-PlasticWidth()-1]);
 	}
 	
-	translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()*1.5-1,FingerTipWidth()*3/8, FingerTipHeight()/4])
+	translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()*1.5-1,FingerTipWidth()*3/8, FingerTipHeight()/5])
 	{
-		cube([PlasticWidth()*1.5+2, FingerTipWidth()/4, FingerTipHeight()/2]);
+		cube([PlasticWidth()*1.5+2, FingerTipWidth()/4, FingerTipHeight()/3]);
 	}
 }
 		Hinge();
 	}
 {
-	translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()/1.5, 0, FingerTipHeight()/2])
+	translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()/1.5, 0, FingerTipHeight()/3])
 			{
 	rotate([-90,0,0])
 	{
@@ -295,7 +296,7 @@ union()
 
 }
 
-translate([HingeDepth()*2.25-PlasticWidth()*1.5,FingerMidWidth()/2,FingerMidHeight()-PlasticWidth()*2])
+translate([HingeDepth()*1.5,FingerMidWidth()/2,FingerMidHeight()-PlasticWidth()*2])
 	{
 	rotate([0,90,0])
 	{
