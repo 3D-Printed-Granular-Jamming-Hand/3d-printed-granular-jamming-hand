@@ -12,7 +12,7 @@ function JointPinDiameter(tolerance=0)=BearingInnerDiameter(tolerance);
 
 function HingeDepth(tolerance=0)=11+tolerance;
 
-
+function Clearance()=3;
 
 
 function FingerMidLength(tolerance=0)=26.33+tolerance;
@@ -40,24 +40,34 @@ module Hinge(tolerance=0)
 					{
 						translate([.5, FingerTipWidth(-tolerance)/4, 0])
 						{
-							cube([HingeDepth(tolerance)*2+1,FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)]);
+							difference()
+							{
+								cube([HingeDepth(tolerance)*2+1,FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)]);
+								difference()
+								{
+									translate([HingeDepth()*2-FingerTipHeight()/4,-PlasticWidth()*2-1,-1])
+									{
+										cube([FingerTipHeight()/2,FingerTipWidth()+2,FingerTipHeight()/4+1]);
+									}
+									translate([HingeDepth()*2-FingerTipHeight()/4,-PlasticWidth()*2-1,FingerTipHeight()/4])
+									{
+										rotate([-90,0,0])
+										{
+											cylinder(r=FingerTipHeight()/4,h=FingerTipWidth()+2, $fn=50);
+										}
+									}
+								}
+							}
 						}
-						translate([HingeDepth()+1,0,FingerTipHeight()/1.5])
+						translate([HingeDepth()+1+Clearance(),0,FingerTipHeight()/2])
 						{
-							cube([HingeDepth(tolerance), FingerTipWidth(tolerance), FingerTipHeight(tolerance)/3]);
+							cube([HingeDepth(tolerance), FingerTipWidth(tolerance), FingerTipHeight(tolerance)/2]);
 						}		
-						translate([HingeDepth(tolerance)*2, 0, FingerTipHeight()/1.5])
+						translate([HingeDepth(tolerance)*2+Clearance(), 0, FingerTipHeight()/2])
 						{
 							rotate([-90,0,0])
 							{
-								difference()
-								{
-									cylinder(r=FingerTipHeight()/2, h=FingerTipWidth(), $fn=50);
-									translate([-FingerTipHeight()/2,-FingerTipHeight(),-1])
-									{
-										cube([FingerTipHeight(),FingerTipHeight(),FingerTipHeight()+2]);
-									}
-								}
+								cylinder(r=FingerTipHeight()/2, h=FingerTipWidth(), $fn=50);									
 							}
 						}			
 					}
@@ -95,7 +105,7 @@ module Hinge(tolerance=0)
 	}
 	translate([HingeDepth()*2-1,-1,-1])
 	{
-		cube([HingeDepth()+1, FingerTipWidth()+2, FingerTipHeight()+2]);
+		cube([HingeDepth()+1+Clearance(), FingerTipWidth()+2, FingerTipHeight()+2]);
 	}
 	}
 }
@@ -125,9 +135,9 @@ translate([-BandLength()/2,FingerTipWidth()/2-BandWidth()/2,FingerTipHeight()-Ba
 		{
 			BandKeepaway();
 		}
-translate([-HingeDepth(tolerance),FingerTipWidth()*1/4, -1])
+translate([-HingeDepth(tolerance),PlasticWidth()*1.5, -1])
 		{
-cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/2.5, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)/2]);
+cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)/2]);
 }
 
 translate([FingerTipHeight()/4, -1, FingerTipHeight()/2])
@@ -153,11 +163,11 @@ difference()
 	}
 		
 	}
-translate([-FingerTipHeight()/4, FingerTipWidth()/4, FingerTipHeight()/2])
+translate([-FingerTipHeight()/4, 0, FingerTipHeight()/6])
 	{
 		rotate([-90,0,0])
 		{
-		cylinder(r=JointPinDiameter()/2, h=FingerTipWidth()/2, $fn=50);
+		cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 		}
 	}
 }
@@ -171,9 +181,9 @@ module FingerTip()
 	{
 		difference()
 		{		
-			translate([HingeDepth()+2+FingerTipLength()/2.5, 0, 0])
+			translate([HingeDepth()+2+FingerTipLength()/2.5+1, 0, 1])
 			{
-				cube([FingerTipLength()-HingeDepth()-3, FingerTipWidth(), FingerTipHeight()]);
+				cube([FingerTipLength()-HingeDepth()-4, FingerTipWidth(), FingerTipHeight()-1]);
 
 			}
 			
@@ -181,13 +191,13 @@ module FingerTip()
 			{
 				cube([FingerTipLength()-PlasticWidth(), FingerTipWidth()-PlasticWidth()*2, FingerTipHeight()-PlasticWidth()-1]);
 			}
-			translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()*1.5-1,FingerTipWidth()*3/8, FingerTipHeight()/5])
+			translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()*1.5-1,FingerTipWidth()*3/8, FingerTipHeight()-FingerTipHeight()/3-PlasticWidth()])
 			{
 				cube([PlasticWidth()*1.5+2, FingerTipWidth()/4, FingerTipHeight()/3]);
 			}
 		}
 		Hinge();
-		translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()/1.5, 0, FingerTipHeight()/3])
+		translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()/1.5, 0, FingerTipHeight()*.835-PlasticWidth()])
 		{
 			rotate([-90,0,0])
 			{
@@ -214,7 +224,7 @@ module FingerMid()
 		difference()
 		{
 			Hinge();
-			translate([FingerMidLength()/2+1,0,FingerTipHeight()-BandKeepAwayHeight()+1])
+			translate([FingerMidLength()/2+Clearance()+1,0,FingerTipHeight()-BandKeepAwayHeight()+1])
 				cube([FingerMidHeight()/2, FingerMidHeight(), FingerMidHeight()/2+1]);
 		}
 		translate([FingerMidLength(),0,0])
@@ -226,16 +236,20 @@ module FingerMid()
 				{
 					translate([-HingeDepth()-2,-1,-1])
 					{
-						cube([FingerMidHeight()/2, FingerMidHeight()+2, FingerMidHeight()/2+1]);
+						cube([FingerMidHeight()/2+1, FingerMidHeight()+2, FingerMidHeight()/2+1]);
 					}
-					translate([-HingeDepth()/2+1+4, 0, FingerMidHeight()/2])
+					translate([-HingeDepth()/2+Clearance()+1, 0, FingerMidHeight()/2])
 					{
 						rotate([-90,0,0])
 						{
 							cylinder(r=FingerTipHeight()/2, h=FingerTipWidth(), $fn=50);
 						}
 					}					
-				}				
+				}
+				translate([-FingerMidLength()-HingeDepth()/2+1,-1,0])
+				{
+					cube([FingerMidHeight(),FingerMidHeight()+2,FingerMidHeight()+1]);	
+				}			
 			}
 		}		
 	}
@@ -259,15 +273,28 @@ module FingerBase()
 		{
 			translate([HingeDepth()*2-PlasticWidth()/2, 0, 0])
 			{
-				cube([FingerBaseLength()-HingeDepth()*3+PlasticWidth()/2, FingerBaseWidth(), FingerBaseHeight()]);
+				difference()
+				{
+					cube([FingerBaseLength()-HingeDepth()*3+PlasticWidth()/2, FingerBaseWidth(), FingerBaseHeight()]);
+					difference()
+								{
+									translate([-1,-1,-1])
+									{
+										cube([FingerTipHeight()/4,FingerTipWidth()+2,FingerTipHeight()/4+1]);
+									}
+									translate([Clearance()+1,-1,FingerTipHeight()/2])
+									{
+										rotate([-90,0,0])
+										{
+											cylinder(r=FingerTipHeight()/2,h=FingerTipWidth()+2, $fn=50);
+										}
+									}
+								}
+				}
 			}
 			translate([-PlasticWidth()/2, PlasticWidth(), -1])
 			{
 				cube([FingerBaseLength()-PlasticWidth(), FingerBaseWidth()-PlasticWidth()*2, FingerBaseHeight()-PlasticWidth()-1]);
-			}
-			translate([FingerBaseLength()-PlasticWidth()*1.5-1,FingerBaseWidth()*3/8, FingerBaseHeight()/4])
-			{
-				cube([PlasticWidth()*1.5+2, FingerBaseWidth()/4, FingerBaseHeight()/2]);
 			}
 		}
 		Hinge();
@@ -275,19 +302,18 @@ module FingerBase()
 		{
 			NegativeHinge();
 		}
-	}
-	
-	translate([HingeDepth()*1.5,FingerMidWidth()/2,FingerMidHeight()-PlasticWidth()*2])
-	{
-		rotate([0,90,0])
+		translate([FingerBaseLength()/2, 0, *FingerTipHeight()/6])
 		{
-			difference()
+			rotate([-90,0,0])
 			{
-				cylinder(r=FingerBaseWidth()/8, h=FingerBaseLength()-HingeDepth()*3, $fn=50);
-				translate([0,0,-1])
-				{
-					cylinder(r=FingerBaseWidth()/16, h=FingerBaseLength()-HingeDepth()*3+2, $fn=50);
-				}
+				cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+			}
+		}
+		translate([FingerBaseLength()*.7, 0, FingerTipHeight()/2])
+		{
+			rotate([-90,0,0])
+			{
+				cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 			}
 		}
 	}
@@ -319,6 +345,31 @@ module Finger()
 	FingerBase();
 	}
 }
+
+module FingerBent()
+{
+	union()
+	{
+		translate([FingerMidLength()+FingerBaseLength()-5,0,14.5])
+		{
+			rotate([0,90,0])
+			color("blue")
+			FingerTip();
+		}
+		translate([FingerBaseLength(),0,0])
+		{
+			FingerMid();
+		}
+	translate([59.5,0,-40])
+	rotate([0,-90,0])
+	color("green")
+	FingerBase();
+	}
+}
+
+//FingerBent();
+
+
 
 Finger();
 
