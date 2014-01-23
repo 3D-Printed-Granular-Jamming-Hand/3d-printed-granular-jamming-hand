@@ -19,7 +19,7 @@ function FingerMidWidth(tolerance=0)=19.75+tolerance;
 function FingerMidHeight(tolerance=0)=19.75+tolerance;
 
 
-function FingerBaseLength(tolerance=0)=44.63+tolerance;
+function FingerBaseLength(tolerance=0)= 30; //44.63+tolerance;
 function FingerBaseWidth(tolerance=0)=19.75+tolerance;
 function FingerBaseHeight(tolerance=0)=19.75+tolerance;
 
@@ -298,7 +298,7 @@ module FingerBase()
 		Hinge();
 		translate([FingerBaseLength(),0,0])
 		{
-			NegativeHinge();
+			#NegativeHinge();
 		}
 		translate([FingerBaseLength()/2, 0, FingerTipHeight()/6])
 		{

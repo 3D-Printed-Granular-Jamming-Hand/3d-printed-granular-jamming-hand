@@ -14,7 +14,7 @@ function HingeDepth(tolerance=0)=11+tolerance;
 function Clearance()=3;
 
 
-function FingerMidLength(tolerance=0)=26.33+tolerance;
+function FingerMidLength(tolerance=0)=36.33+tolerance;
 function FingerMidWidth(tolerance=0)=19.75+tolerance;
 function FingerMidHeight(tolerance=0)=19.75+tolerance;
 
@@ -249,7 +249,22 @@ module FingerMid()
 					cube([FingerMidHeight(),FingerMidHeight()+2,FingerMidHeight()+1]);	
 				}			
 			}
-		}		
+		}
+		difference()
+		{
+			translate([HingeDepth()*2-1,0,0])
+			{
+				cube([HingeDepth()+1,FingerTipWidth(),FingerTipHeight()]);
+			}		
+			translate([HingeDepth()*2-2,PlasticWidth(),-1])
+			{
+				cube([HingeDepth()+2,FingerTipWidth()-PlasticWidth()*2,FingerTipHeight()-BandKeepAwayHeight()+1]);
+			}	
+			translate([HingeDepth()*2.5-1,PlasticWidth(),FingerTipHeight()-BandKeepAwayHeight()])
+			{
+				cube([HingeDepth(),FingerTipWidth()-PlasticWidth()*2,FingerTipHeight()-BandKeepAwayHeight()+1]);
+			}
+		}
 	}
 }
   
@@ -328,7 +343,7 @@ module FingerBase()
 //}
 
 
-module Finger()
+module Thumb()
 {
 	union()
 	{
@@ -369,7 +384,7 @@ module FingerBent()
 
 
 
-Finger();
+Thumb();
 
 //translate([0,0,FingerBaseHeight()])
 //rotate([0,180,0])

@@ -8,10 +8,13 @@ function FingerTipLength(tolerance=0)=17.4+tolerance;
 function FingerTipWidth(tolerance=0)=19+tolerance;
 function FingerTipHeight(tolerance=0)=19.75+tolerance; //not sure how tall to make the fingers so I'm just making height the same as width for now. When I say tall, I mean looking at it from the side what is length from underside (where the palm/fingerprints are) to the upper part (where the knuckes/nails are)
 
-function JointPinDiameter(tolerance=0)=BearingInnerDiameter(tolerance);
+function JointPinBaseDiameter(tolerance=0)=5+tolerance;
+function JointPinEndDiameter(tolerance=0)=1+tolerance;
+function GenericPinDiameter(tolerance=0)=2.5+tolerance;
 function HingeDepth(tolerance=0)=11+tolerance;
 
 function Clearance()=3;
+function JointClearance()=1.5;
 
 
 function FingerMidLength(tolerance=0)=26.33+tolerance;
@@ -94,13 +97,23 @@ module Hinge(tolerance=0)
 				}
 			}
 		}
-		translate([FingerTipHeight()/4, 0, FingerTipHeight()/2])
+		
+translate([FingerTipHeight()/4, FingerTipWidth(tolerance)*.75, FingerTipHeight()/2])
 		{
 			rotate([-90,0,0])
 			{
-				cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+				JointPin(tolerance);
 			}
 		}
+translate([FingerTipHeight()/4, FingerTipWidth(tolerance)*.25, FingerTipHeight()/2])
+		{
+			rotate([90,0,0])
+			{
+				JointPin(tolerance);
+			}
+}
+
+
 	}
 	translate([HingeDepth()*2-1,-1,-1])
 	{
@@ -113,6 +126,19 @@ module Hinge(tolerance=0)
 //Hinge();
 
 
+module JointPin(tolerance=0)
+{
+
+cylinder(FingerTipWidth(-tolerance)/4, JointPinBaseDiameter()/2, JointPinEndDiameter()/2, $fn=50);
+			
+}
+
+module JointPinHole(tolerance=0)
+{
+
+cylinder(FingerTipWidth(-tolerance)/4+JointClearance(tolerance)+1, JointPinBaseDiameter()/2+JointClearance(tolerance), JointPinEndDiameter()/2, $fn=50);
+			
+}
 
 module NegativeHinge(tolerance=5)
 {
@@ -127,7 +153,7 @@ union()
 		}
 		translate([-1, FingerTipWidth(-tolerance)/4, -1])
 		{
-			cube([HingeDepth(tolerance)+1,FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)]);
+			cube([HingeDepth(tolerance)+1,FingerTipWidth(tolerance)/2+.5, FingerTipHeight(tolerance)]);
 		}
 translate([-BandLength()/2,FingerTipWidth()/2-BandWidth()/2,FingerTipHeight()-BandKeepAwayHeight()+1])
 		
@@ -139,11 +165,19 @@ translate([-HingeDepth(tolerance),PlasticWidth()*1.5, -1])
 cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)/2]);
 }
 
-translate([FingerTipHeight()/4, -1, FingerTipHeight()/2])
+translate([FingerTipHeight()/4, FingerTipWidth(tolerance)*.6, FingerTipHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					cylinder(r=BearingOuterDiameter()/2, h=FingerTipWidth()+2, $fn=50);
+					JointPinHole();
+				}
+			}
+
+translate([FingerTipHeight()/4, FingerTipWidth(tolerance)*.2, FingerTipHeight()/2])
+			{
+				rotate([90,0,0])
+				{
+					JointPinHole();
 				}
 			}
 difference()
@@ -166,7 +200,7 @@ translate([-FingerTipHeight()/4, 0, FingerTipHeight()/6])
 	{
 		rotate([-90,0,0])
 		{
-		cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+		cylinder(r=GenericPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 		}
 	}
 }
@@ -199,7 +233,7 @@ module FingerTip()
 		{
 			rotate([-90,0,0])
 			{
-				cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);				
+				cylinder(r=GenericPinDiameter()/2, h=FingerTipWidth(), $fn=50);				
 			} 
 		}
 	}
@@ -304,14 +338,14 @@ module FingerBase()
 		{
 			rotate([-90,0,0])
 			{
-				//cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+				//cylinder(r=GenericPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 			}
 		}
 		translate([FingerBaseLength()*.7, 0, FingerTipHeight()/2])
 		{
 			rotate([-90,0,0])
 			{
-				//cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+				//cylinder(r=GenericPinDiameter()/2, h=FingerTipWidth(), $fn=50);
 			}
 		}
 	}

@@ -1,5 +1,9 @@
-use <Finger.scad>
+use <Finger TEST2.scad>
+use <IndexMiddleTest.scad>
+use <PinkyTest.scad>
+use <ThumbTest.scad>
 use <Palm.scad>
+
 
 module Hand()
 {
@@ -8,26 +12,26 @@ union()
 Palm();
 translate([PalmLength(),0,0])
 {
-	Finger();
+	Pinky();
 }
-translate([PalmLength(),FingerBaseWidth()+1,0])
+translate([PalmLength(),FingerBaseWidth()+2,0])
+{
+	IndexRing();
+}
+translate([PalmLength(),FingerBaseWidth()*2+4,0])
 {
 	Finger();
 }
-translate([PalmLength(),FingerBaseWidth()*2+2,0])
+translate([PalmLength(),FingerBaseWidth()*3+6,0])
 {
-	Finger();
-}
-translate([PalmLength(),FingerBaseWidth()*3+3,0])
-{
-	Finger();
+	IndexRing();
 }
 }
 }
 Hand();
 
-translate([PalmLength()/3, PalmWidth()-HingeDepth(),0])
+translate([15, PalmWidth()*2/3-HingeDepth(),0])
 rotate([0,0,50])
 {
-	Finger();
+	Thumb();
 }

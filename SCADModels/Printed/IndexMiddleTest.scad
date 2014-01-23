@@ -19,7 +19,7 @@ function FingerMidWidth(tolerance=0)=19.75+tolerance;
 function FingerMidHeight(tolerance=0)=19.75+tolerance;
 
 
-function FingerBaseLength(tolerance=0)=44.63+tolerance;
+function FingerBaseLength(tolerance=0)= 34.63;//44.63+tolerance;
 function FingerBaseWidth(tolerance=0)=19.75+tolerance;
 function FingerBaseHeight(tolerance=0)=19.75+tolerance;
 
@@ -328,7 +328,7 @@ module FingerBase()
 //}
 
 
-module Finger()
+module IndexRing()
 {
 	union()
 	{
@@ -369,7 +369,7 @@ module FingerBent()
 
 
 
-Finger();
+IndexRing();
 
 //translate([0,0,FingerBaseHeight()])
 //rotate([0,180,0])
