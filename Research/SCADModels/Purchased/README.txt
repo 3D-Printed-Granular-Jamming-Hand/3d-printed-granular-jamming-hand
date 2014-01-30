@@ -1,1 +1,0 @@
-This folder contains all the models/keepaways/etc for parts that will be purchased and need to fit into the printed parts.

@@ -1,1 +1,0 @@
-This folder contains all of the parts that comprise the hand and will be 3d printed.
