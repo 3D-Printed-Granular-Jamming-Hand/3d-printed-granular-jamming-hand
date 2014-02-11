@@ -409,7 +409,7 @@ module FingerBent()
 //FingerBent();
 
 
-IndexRIng();
+IndexRing();
 
 //translate([0,0,FingerBaseHeight()])
 //rotate([0,180,0])

@@ -14,10 +14,24 @@ function ThumbAngle()= 50; //angle of thumb attachment
 
 
 
+
+
+//fixed wire guide issue
+
+
+
+
+
+
+
+
+
+
+
 //this makes the basic shape for the cable guides (the structures along the palm of the hand)
 module BasePalmCableGuide(Length=10)
 {
-	translate([0,0,PlasticWidth()*2])
+	translate([0,0,PlasticWidth()*2.3])
 	{	
 		rotate([0,90,0])
 		{
@@ -69,7 +83,7 @@ module AngledPalmCableGuide(Length=50)
 		{
 			rotate([0,0,ThumbAngle()])
 			{
-				BasePalmCableGuide(Length);
+				#BasePalmCableGuide(Length);
 			}
 		}
 	}
@@ -208,7 +222,7 @@ module Palm()
 				{
 					rotate([0,0,ThumbAngle()])
 					{
-						cube([PalmLength()*.75,PalmWidth()-PlasticWidth()*4, PalmHeight()]);					
+						//cube([PalmLength()*.75,PalmWidth()-PlasticWidth()*4, PalmHeight()]);					
 					}
 				}	
 			}
@@ -271,13 +285,13 @@ module Palm()
 					}
 				}
 			}
-			translate([0,0,PalmHeight()-PlasticWidth()*2-BandKeepAwayHeight()-1.7])
+			translate([0,0,PalmHeight()-PlasticWidth()*2-BandKeepAwayHeight()-.3])
 			{
-				cube([15,PalmWidth()/2-1, PlasticWidth()*1.6+BandKeepAwayHeight()]);
+				cube([15,PalmWidth()/2-1, PlasticWidth()+BandKeepAwayHeight()]);
 			}
-			translate([0,0,PalmHeight()-PlasticWidth()*2-BandKeepAwayHeight()-1.7])
+			translate([0,0,PalmHeight()-PlasticWidth()*2-BandKeepAwayHeight()-.3])
 			{
-				cube([3.8,PalmWidth()/2+2.2, PlasticWidth()*1.6+BandKeepAwayHeight()]);
+				cube([3.8,PalmWidth()/2+2.2, PlasticWidth()+BandKeepAwayHeight()]);
 			}
 		}
 		translate([-PalmLength(),0,-1])
@@ -327,9 +341,9 @@ module Palm()
 		}
 		difference()
 		{
-			translate([-PalmLength()/4.5,0,PalmHeight()-PlasticWidth()*2-BandKeepAwayHeight()-1.7])
+			translate([-PalmLength()/4.5,0,PalmHeight()-PlasticWidth()*2-BandKeepAwayHeight()-.3])
 			{
-				cube([PalmLength()/4.5,PalmWidth()/2+13, PlasticWidth()*1.6+BandKeepAwayHeight()]);
+				cube([PalmLength()/4.5,PalmWidth()/2+13, PlasticWidth()+BandKeepAwayHeight()]);
 			}
 		translate([-PalmWidth()/16,PalmWidth()/1.8,0])
 		{

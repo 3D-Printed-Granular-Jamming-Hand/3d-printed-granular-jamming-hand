@@ -324,7 +324,14 @@ module FingerBase()
 	{
 		union()
 		{
-			Hinge();
+			difference()
+			{
+				Hinge();
+				translate([HingeDepth()+3,0,FingerHeight()-BandKeepAwayHeight()])
+				{
+					cube([HingeDepth(),FingerWidth(),BandKeepAwayHeight()*2]);
+				}
+			}
 			translate([FingerBaseLength(),0,0])
 			{
 				NegativeHinge();
