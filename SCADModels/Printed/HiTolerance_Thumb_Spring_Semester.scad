@@ -7,7 +7,7 @@ function JointPinEndDiameter(tolerance=0)=1-tolerance;
 function GenericPinDiameter(tolerance=0)=2.5+tolerance;
 function HingeDepth(tolerance=0)=11+tolerance;
 
-function JointClearance(tolerance=0)=2;
+function JointClearance(tolerance=0)=3;
 function PinClearance(tolerance=0)=0.3; //usually 1.5
 
 function FingerTipLength(tolerance=0)=17.4+tolerance;
@@ -184,14 +184,14 @@ module NegativeHinge(tolerance=0)
 			{
 				cube([HingeDepth(JointClearance())+PlasticWidth(JointClearance())+3, FingerWidth(JointClearance())/2, FingerHeight(JointClearance())-PlasticWidth(JointClearance())-BandKeepAwayHeight(JointClearance())/2]);
 			}
-			translate([FingerHeight()/4, FingerWidth(JointClearance())*.6+JointClearance(), FingerHeight()/2])
+				translate([FingerHeight()/4, FingerWidth()-(FingerWidth()/4+PinClearance())+1, FingerHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
 					JointPinHole();
 				}
 			}
-			translate([FingerHeight()/4, FingerWidth(JointClearance())*.2, FingerHeight()/2])
+			translate([FingerHeight()/4, FingerWidth()/4+PinClearance()-1, FingerHeight()/2])
 			{
 				rotate([90,0,0])
 				{

@@ -385,28 +385,32 @@ module IndexRing()
 	}
 }
 
-module FingerBent()
+module IndexBent()
+{
+translate([44,0,-17])
+rotate([0,180,0])
 {
 	union()
 	{
 		translate([FingerMidLength()+FingerBaseLength()-4,0,13])
 		{
 			rotate([0,90,0])
-			color("blue")
+			//color("blue")
 			FingerTip();
 		}
 		translate([FingerBaseLength(),0,0])
 		{
 			FingerMid();
 		}
-	translate([58,0,-40])
+	translate([48,0,-30])
 	rotate([0,-90,0])
-	color("green")
+	//color("green")
 	FingerBase();
 	}
 }
+}
 
-//FingerBent();
+IndexBent();
 
 
 IndexRing();

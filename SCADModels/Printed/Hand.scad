@@ -27,9 +27,9 @@ module Hand()
 		{
 			IndexRing(); //Index/Ring
 		}
-		translate([17, PalmWidth()*2/3-HingeDepth()-1,0])
+		translate([5,65,0])
 		{
-			rotate([0,0,50])
+			rotate([0,0,180])
 			{
 				Thumb(); //Thumb
 			}

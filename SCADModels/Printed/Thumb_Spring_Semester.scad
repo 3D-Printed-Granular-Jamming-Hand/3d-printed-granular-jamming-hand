@@ -362,14 +362,17 @@ module Thumb()
 	}
 }
 
-module FingerBent()
+module ThumbBent()
+{
+translate([53.5,0,-27.5])
+rotate([0,180,0])
 {
 	union()
 	{
 		translate([FingerMidLength()+FingerBaseLength()-4,0,13])
 		{
 			rotate([0,90,0])
-			color("blue")
+			//color("blue")
 			FingerTip();
 		}
 		translate([FingerBaseLength(),0,0])
@@ -378,12 +381,13 @@ module FingerBent()
 		}
 	translate([58,0,-40])
 	rotate([0,-90,0])
-	color("green")
+	//color("green")
 	FingerBase();
 	}
 }
+}
 
-//FingerBent();
+ThumbBent();
 
 
 Thumb();
