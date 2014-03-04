@@ -1,1 +1,0 @@
-This folder contains scholarly articles about granular jamming.

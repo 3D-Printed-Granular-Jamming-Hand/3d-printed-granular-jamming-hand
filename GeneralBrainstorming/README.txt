@@ -1,1 +1,0 @@
-Ideas to be explored, compared, and improved upon go here.

@@ -1,216 +1,258 @@
-use <../Tolerances/PlasticWidth.scad>
 use <../Purchased/RubberBand.scad>
-
-//I'll put the thumb in this file when I have enough thumb data
-
-//right now it's just the finger code copied over
-
-//plz ignore
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //finger size values are based on the research in the "real hands" folder
 
+function JointPinBaseDiameter(tolerance=0)=5-tolerance;
+function JointPinEndDiameter(tolerance=0)=1-tolerance;
+function GenericPinDiameter(tolerance=0)=2.5+tolerance;
+function HingeDepth(tolerance=0)=11+tolerance;
+
+function JointClearance(tolerance=0)=3;
+function PinClearance(tolerance=0)=0.3; //usually 1.5
+
 function FingerTipLength(tolerance=0)=17.4+tolerance;
-function FingerTipWidth(tolerance=0)=19.75+tolerance;
-function FingerTipHeight(tolerance=0)=19.75+tolerance; //not sure how tall to make the fingers so I'm just making height the same as width for now. When I say tall, I mean looking at it from the side what is length from underside (where the palm/fingerprints are) to the upper part (where the knuckes/nails are)
+function FingerMidLength(tolerance=0)=36.33+tolerance;
 
-function JointPinDiameter(tolerance=0)=3+tolerance;
+function FingerBaseLength()=44.63;
 
-function HingeDepth(tolerance=0)=10+tolerance;
-
+		
 
 
+function FingerWidth(tolerance=0)=19.75+tolerance;
+function FingerHeight(tolerance=0)=17+tolerance; // made shorter, usually 19.75 though
 
-function FingerMidLength(tolerance=0)=26.33+tolerance;
-function FingerMidWidth(tolerance=0)=19.75+tolerance;
-function FingerMidHeight(tolerance=0)=19.75+tolerance;
+function PlasticWidth(tolerance=0)=FingerWidth(tolerance)/8;
 
 
-function FingerBaseLength(tolerance=0)=44.63+tolerance;
-function FingerBaseWidth(tolerance=0)=19.75+tolerance;
-function FingerBaseHeight(tolerance=0)=19.75+tolerance;
+//get it to support tolerance properly again (probably broke this a little)
+//modify it so all fingers work from the same file
+
+
+//knock out all the mid stuff
 
 
 
 module Hinge(tolerance=0)
 {
-union()
-{
-	difference()
-	{
 	difference()
 	{
 		union()
 		{
-			translate([0, FingerTipWidth(-tolerance)/4, 0])
+			difference()
 			{
-			cube([HingeDepth(tolerance)+1,FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)]);
+				difference()
+				{
+					union()
+					{
+						translate([0, FingerWidth(-tolerance)/4, 0])
+						{
+							difference()
+							{
+								cube([HingeDepth(tolerance)*2+1,FingerWidth(tolerance)/2, FingerHeight(tolerance)]);
+								difference()
+								{
+									translate([HingeDepth()*2-FingerHeight()/4,-PlasticWidth()*2-1,-1])
+									{
+										cube([FingerHeight()/2,FingerWidth()+2,FingerHeight()/4+1]);
+									}
+									translate([HingeDepth()*2-FingerHeight()/4,-PlasticWidth()*2-1,FingerHeight()/4])
+									{
+										rotate([-90,0,0])
+										{
+											cylinder(r=FingerHeight()/4,h=FingerWidth()+2, $fn=50);
+										}
+									}
+								}
+							}
+						}
+						translate([HingeDepth()+2.5,0,FingerHeight()/2])
+						{
+							cube([FingerHeight()/2-1, FingerWidth(), FingerHeight()/2]);
+						}		
+						translate([HingeDepth(tolerance)*2, 0, FingerHeight()/2])
+						{
+							rotate([-90,0,0])
+							{
+								cylinder(r=FingerHeight()/2, h=FingerWidth(), $fn=50);									
+							}
+						}			
+					}
+					translate([-1, FingerWidth(-tolerance)*3/8, -1])
+					{
+						cube([HingeDepth(tolerance)+PlasticWidth(tolerance)*5, FingerWidth(tolerance)/4, FingerHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)]);
+					}
+					translate([-BandLength()/2,FingerWidth()/2-BandWidth()/2,FingerHeight()-BandKeepAwayHeight()+1])
+					{
+						BandKeepaway();
+					}
+				}
+				difference()
+				{
+					translate([-1,0,-1])
+					{
+						cube([HingeDepth()-1, FingerWidth(), FingerHeight()/2+1]);
+					}
+					translate([FingerHeight()/2, 0, FingerHeight()/2])
+					{
+						rotate([-90,0,0])
+						{
+							cylinder(r=FingerHeight()/2, h=FingerWidth(), $fn=50);
+						}
+					}
+				}
 			}
-			translate([HingeDepth()+1,0,0])
-			{
-			cube([PlasticWidth(tolerance), FingerTipWidth(tolerance), FingerTipHeight(tolerance)]);
-			}		
-			
-}
-		translate([-1, FingerTipWidth(-tolerance)*3/8, -1])
-		{
-		cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/4, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)]);
-		}
-
-translate([-BandLength()/2,FingerTipWidth()/2-BandWidth()/2,FingerTipHeight()-BandKeepAwayHeight()+1])
-		{
-			BandKeepaway();
-		}
-	}
-	difference()
-	{
-	translate([-1,0,-1])
-	{
-	cube([HingeDepth()+1, FingerTipWidth(), FingerTipHeight()/2+1]);
-	}
-	translate([FingerTipHeight()/2, 0, FingerTipHeight()/2])
-	{
-		rotate([-90,0,0])
-		{
-		cylinder(r=FingerTipHeight()/2, h=FingerTipWidth(), $fn=50);
-}
-		}
-	}
-	}
-translate([FingerTipHeight()/4, 0, FingerTipHeight()/2])
+			translate([FingerHeight()/4, FingerWidth(tolerance)*.75, FingerHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+					JointPin(tolerance);
 				}
 			}
-}
+			translate([FingerHeight()/4, FingerWidth(tolerance)*.25, FingerHeight()/2])
+			{
+				rotate([90,0,0])
+				{
+					JointPin(tolerance);
+				}
+			}
+		}
+		translate([HingeDepth()*2-1,-1,-1])
+		{
+			cube([HingeDepth()+1+JointClearance(), FingerWidth()+2, FingerHeight()+2]);
+		}
+	}
 }
 
 
 //Hinge();
 
 
-//things to do: round the hinges so they don't intefere, add the joint pins, see if the rubber band keepaway will work right
-module NegativeHinge(tolerance=2)
-{
 
-union()
+module JointPin(tolerance=0)
+{
+	cylinder(FingerWidth(-tolerance)/4, JointPinBaseDiameter()/2, JointPinEndDiameter()/2, $fn=50);
+}
+
+
+
+module JointPinHole(tolerance=0)
+{
+	cylinder(FingerWidth(-tolerance)/4+PinClearance(tolerance)+1, JointPinBaseDiameter(-tolerance)/2+PinClearance(tolerance), JointPinEndDiameter(tolerance)/2, $fn=50);			
+}
+
+
+module CableGuide(tolerance=0)
 {
 	difference()
 	{
-		translate([-HingeDepth(),0,0])
+		translate([0,0,1.5])
 		{
-			cube([HingeDepth()*2, FingerTipWidth(), FingerTipHeight()]);
+			cube([PlasticWidth()/1.5, FingerWidth(), FingerHeight()/1.5]);
 		}
-		translate([-1, FingerTipWidth(-tolerance)/4, -1])
+		translate([-1,FingerWidth()/2,FingerWidth()/8+FingerHeight()/6])
 		{
-			cube([HingeDepth(tolerance)+1,FingerTipWidth(tolerance)/2, FingerTipHeight(tolerance)]);
+			rotate([0,90,0])
+			{
+				cylinder(r=FingerWidth()/8, h=PlasticWidth()+2, $fn=50);
+			}
 		}
-translate([-BandLength()/2,FingerTipWidth()/2-BandWidth()/2,FingerTipHeight()-BandKeepAwayHeight()+1])
-		
-		{
-			BandKeepaway();
-		}
-translate([-HingeDepth(tolerance), FingerTipWidth(-tolerance/3)*3/8, -1])
-		{
-cube([HingeDepth(tolerance)+PlasticWidth(tolerance)+3, FingerTipWidth(tolerance)/4, FingerTipHeight(tolerance)-PlasticWidth(tolerance)-BandKeepAwayHeight(tolerance)/2]);
+	}
 }
 
-translate([FingerTipHeight()/4, -1, FingerTipHeight()/2])
+//CableGuide();
+
+
+module NegativeHinge(tolerance=0)
+{
+	union()
+	{
+		difference()
+		{
+			translate([-HingeDepth(),0,0])
+			{
+				cube([HingeDepth()*2-2.5, FingerWidth(), FingerHeight()]);
+			}
+			translate([-1, FingerWidth(-JointClearance())/4, -1])
+			{
+				cube([HingeDepth(JointClearance())+1,FingerWidth(JointClearance())/2, FingerHeight(JointClearance())]);
+			}
+			translate([-BandLength()/2,FingerWidth()/2-BandWidth()/2,FingerHeight()-BandKeepAwayHeight()+1])
+			{
+				BandKeepaway();
+			}
+			translate([-HingeDepth(JointClearance()), FingerWidth(-JointClearance())/4, -1])
+			{
+				cube([HingeDepth(JointClearance())+PlasticWidth(JointClearance())+3, FingerWidth(JointClearance())/2, FingerHeight(JointClearance())-PlasticWidth(JointClearance())-BandKeepAwayHeight(JointClearance())/2]);
+			}
+				translate([FingerHeight()/4, FingerWidth()-(FingerWidth()/4+PinClearance())+1, FingerHeight()/2])
 			{
 				rotate([-90,0,0])
 				{
-					cylinder(r=JointPinDiameter(1)/2, h=FingerTipWidth()+2, $fn=50);
+					JointPinHole();
 				}
 			}
-difference()
-	{
-	translate([-1,-1,-1])
-	{
-	cube([HingeDepth()+2, FingerTipWidth()+2, FingerTipHeight()/2+1]);
-	}
-	translate([0, 0, FingerTipHeight()/2])
-	{
-		rotate([-90,0,0])
+			translate([FingerHeight()/4, FingerWidth()/4+PinClearance()-1, FingerHeight()/2])
+			{
+				rotate([90,0,0])
+				{
+					JointPinHole();
+				}
+			}
+			difference()
+			{
+				translate([-1,-1,-1])
+				{
+					cube([HingeDepth()+2, FingerWidth()+2, FingerHeight()/2+1]);
+				}
+				translate([0, 0, FingerHeight()/2])
+				{
+					rotate([-90,0,0])
+					{
+						cylinder(r=FingerHeight()/2, h=FingerWidth(), $fn=50);
+					}
+				}
+			}
+		}
+		translate([-FingerHeight()/2.5, 0, 0])
 		{
-		cylinder(r=FingerTipHeight()/2, h=FingerTipWidth(), $fn=50);
-}
+			CableGuide();
 		}
 	}
-		
-	}
-translate([-FingerTipHeight()/4, FingerTipWidth()/4, FingerTipHeight()/2])
-	{
-		rotate([-90,0,0])
-		{
-		cylinder(r=JointPinDiameter()/2, h=FingerTipWidth()/2, $fn=50);
-		}
-	}
-}
 }
 
 //NegativeHinge();
 
 module FingerTip()
 {
-union()
-{
-	difference()
+	union()
 	{
-		
-			translate([HingeDepth()+1, 0, 0])
+		difference()
+		{		
+			union()
 			{
-				cube([FingerTipLength()-HingeDepth()/2-1, FingerTipWidth(), FingerTipHeight()]);
+				translate([HingeDepth()+2+FingerTipLength()/2.5+1, 0, 0])
+				{
+					cube([FingerTipLength()-HingeDepth()-4, FingerWidth(), FingerHeight()]);
+				}
+				Hinge();
+			}			
+			translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()*1.5-1,FingerWidth()*3/8, FingerHeight()-FingerHeight()/3-PlasticWidth()])
+			{
+				cube([PlasticWidth()*1.5+2, FingerWidth()/4, FingerHeight()/3]);
 			}
-			
-		
-	translate([HingeDepth()/2-PlasticWidth()/2, PlasticWidth(), -1])
-	{
-		cube([FingerTipLength()-PlasticWidth(), FingerTipWidth()-PlasticWidth()*2, FingerTipHeight()-PlasticWidth()-1]);
-	}
-	
-	translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()*1.5-1,FingerTipWidth()*3/8, FingerTipHeight()/4])
-	{
-		cube([PlasticWidth()*1.5+2, FingerTipWidth()/4, FingerTipHeight()/2]);
-	}
-}
-		Hinge();
-	}
-{
-	translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()/1.5, 0, FingerTipHeight()/2])
+		}
+		translate([FingerTipLength()+HingeDepth()/2-PlasticWidth()/1.5, 0, FingerHeight()*.835-PlasticWidth()])
+		{
+			rotate([-90,0,0])
 			{
-	rotate([-90,0,0])
-	{
-		cylinder(r=JointPinDiameter()/2, h=FingerTipWidth(), $fn=50);
+				cylinder(r=GenericPinDiameter()/2, h=FingerWidth(), $fn=50);				
+			} 
+		}
 	}
-	}
-
-	
-}
-
 }
 
 //FingerTip();
+
 
 
 //to check that the effective length is correct
@@ -221,45 +263,29 @@ union()
 
 module FingerMid()
 {
-
-union()
-{
-	difference()
+	union()
 	{
-		
-			translate([HingeDepth()+1, 0, 0])
-			{
-				cube([FingerMidLength()-HingeDepth()*2-1, FingerMidWidth(), FingerMidHeight()]);
-			}
-			
-		
-	translate([-PlasticWidth()/2, PlasticWidth(), -1])
-	{
-		cube([FingerMidLength()-PlasticWidth(), FingerMidWidth()-PlasticWidth()*2, FingerMidHeight()-PlasticWidth()-1]);
-	}
-	
-	translate([FingerMidLength()-PlasticWidth()*1.5-1,FingerMidWidth()*3/8, FingerMidHeight()/4])
-	{
-		cube([PlasticWidth()*1.5+2, FingerMidWidth()/4, FingerMidHeight()/2]);
-	}
-}
 		Hinge();
 		translate([FingerMidLength(),0,0])
 		{
-			NegativeHinge();
+			NegativeHinge();					
+			
+		}		
+		difference()
+		{
+			translate([FingerMidLength()/1.8,0,0])
+			{
+				cube([FingerMidLength()/6,FingerWidth(),FingerHeight()]);
+			}
+			translate([FingerMidLength()/1.8-1,FingerWidth()/4,-1])
+			{
+				cube([HingeDepth()+PlasticWidth()*5, FingerWidth()/2, FingerHeight()-PlasticWidth()-BandKeepAwayHeight()+1]);
+			}
 		}
 	}
-{
-
-
-	
 }
   
-
-
-}
-
-
+  
 
 //FingerMid();
 
@@ -272,64 +298,44 @@ union()
 
 module FingerBase()
 {
-
-union()
-{
-	difference()
+	union()
 	{
-		
-			translate([HingeDepth()+1, 0, 0])
+		difference()
+		{
+			translate([HingeDepth()*2-PlasticWidth()/2, 0, 0])
 			{
-				cube([FingerBaseLength()-HingeDepth()*2-1, FingerBaseWidth(), FingerBaseHeight()]);
+				difference()
+				{
+					cube([FingerBaseLength()-HingeDepth()*3+PlasticWidth()/2, FingerWidth(), FingerHeight()]);
+					difference()
+					{
+						translate([-2.5,-1,-1])
+						{
+							cube([FingerHeight()/4,FingerWidth()+2,FingerHeight()/4+1]);
+						}
+						translate([1.2,-1,FingerHeight()/2])
+						{
+							rotate([-90,0,0])
+							{
+								cylinder(r=FingerHeight()/2,h=FingerWidth()+2, $fn=50);
+							}
+						}
+					}
+				}
 			}
-			
-		
-	translate([-PlasticWidth()/2, PlasticWidth(), -1])
-	{
-		cube([FingerBaseLength()-PlasticWidth(), FingerBaseWidth()-PlasticWidth()*2, FingerBaseHeight()-PlasticWidth()-1]);
-	}
-	
-	translate([FingerBaseLength()-PlasticWidth()*1.5-1,FingerBaseWidth()*3/8, FingerBaseHeight()/4])
-	{
-		cube([PlasticWidth()*1.5+2, FingerBaseWidth()/4, FingerBaseHeight()/2]);
-	}
-}
+			translate([-PlasticWidth()/2, PlasticWidth(), -1])
+			{
+				cube([FingerBaseLength()-PlasticWidth(), FingerWidth()-PlasticWidth()*2, FingerHeight()-PlasticWidth()-1]);
+			}
+		}
 		Hinge();
 		translate([FingerBaseLength(),0,0])
 		{
 			NegativeHinge();
 		}
 	}
-{
-
-
-	translate([HingeDepth()*2-PlasticWidth()*1.5,FingerBaseWidth()/2,FingerBaseHeight()-PlasticWidth()*2])
-	{
-	rotate([0,90,0])
-	{
-
-	}
-}
-  
-
 }
 
-translate([HingeDepth()*2.25-PlasticWidth()*1.5,FingerMidWidth()/2,FingerMidHeight()-PlasticWidth()*2])
-	{
-	rotate([0,90,0])
-	{
-
-	
-difference()
-{
-		cylinder(r=FingerBaseWidth()/8, h=FingerBaseLength()-HingeDepth()*3, $fn=50);
-		translate([0,0,-1])
-		{
-			cylinder(r=FingerBaseWidth()/16, h=FingerBaseLength()-HingeDepth()*3+2, $fn=50);
-		}
-}
-}}
-}
 
 
 
@@ -342,19 +348,48 @@ difference()
 //}
 
 
-module Finger()
+module Thumb()
 {
-union()
+	union()
+	{
+		translate([FingerMidLength()+FingerBaseLength(),0,0])
+		{
+			FingerTip();
+		}
+		translate([FingerBaseLength(),0,0])
+		{
+			FingerMid();
+		}
+	FingerBase();
+	}
+}
+
+module ThumbBent()
 {
-translate([FingerMidLength()+FingerBaseLength(),0,0])
-{
-	FingerTip();
+	union()
+	{
+		translate([FingerMidLength()+FingerBaseLength()-4,0,13])
+		{
+			rotate([0,90,0])
+			color("blue")
+			FingerTip();
+		}
+		translate([FingerBaseLength(),0,0])
+		{
+			FingerMid();
+		}
+	translate([58,0,-40])
+	rotate([0,-90,0])
+	color("green")
+	FingerBase();
+	}
 }
-translate([FingerBaseLength(),0,0])
-{
-	FingerMid();
-}
-FingerBase();
-}
-}
-Finger();
+
+//ThumbBent();
+
+
+Thumb();
+
+//translate([0,0,FingerBaseHeight()])
+//rotate([0,180,0])
+//Finger();

@@ -1,1 +1,0 @@
-Descriptions of what happens at every meeting, what the goals are for the next meeting, who is responsible for what, etc.

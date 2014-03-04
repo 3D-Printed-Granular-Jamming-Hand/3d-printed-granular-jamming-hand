@@ -1,1 +1,0 @@
-Statistics on arm amputation-- for background.

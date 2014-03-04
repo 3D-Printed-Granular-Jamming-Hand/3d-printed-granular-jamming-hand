@@ -1,8 +1,8 @@
-use <Finger_Spring_Semester.scad>
-use <IndexRing_Spring_Semester.scad>
-use <Pinky_Spring_Semester.scad>
-use <Thumb_Spring_Semester.scad>
-use <Palm3.scad>
+use <Mid.scad>
+use <IndexRing.scad>
+use <Pinky.scad>
+use <Thumb.scad>
+use <Palm.scad>
 
 
 
@@ -21,13 +21,13 @@ module Hand()
 		}
 		translate([PalmLength(),FingerWidth()*2+5,0])
 		{
-			Finger(); //Middle
+			Middle(); //Middle
 		}
 		translate([PalmLength(),FingerWidth()*3+8,0])
 		{
 			IndexRing(); //Index/Ring
 		}
-		translate([5,65,0])
+			translate([5,65,0])
 		{
 			rotate([0,0,180])
 			{

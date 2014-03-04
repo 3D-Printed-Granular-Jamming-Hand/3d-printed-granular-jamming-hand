@@ -1,1 +1,0 @@
-This folder contains all videos made for original research.

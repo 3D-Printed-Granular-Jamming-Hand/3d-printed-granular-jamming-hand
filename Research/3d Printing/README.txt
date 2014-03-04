@@ -1,1 +1,0 @@
-This folder contains research on 3d printing.
