@@ -15,6 +15,11 @@ function ThumbAngle()= 35; //angle of thumb attachment
 function GuideAngle()=60;
 function CableGuideHeight()=5;
 
+function AirLineWidth(tolerance=1)=11.11+tolerance;
+
+
+
+//THE SUPPORT MATERIAL DOESN'T CLEAR OUT WELL FROM THE NEW JOINT GUIDES -- REVISIT AGAIN?
 
 
 
@@ -36,9 +41,9 @@ module BasePalmCableGuide(Length=10)
 					{
 						cylinder(r=PalmHoleWidth(), h=Length, $fn=50);
 					}
-					translate([-FingerHeight()/1.5+FingerWidth()/6,-PalmHoleWidth(),0])
+					translate([-FingerHeight()/1.5+FingerWidth()/6-PlasticWidth()*1.2,-PalmHoleWidth(),0])
 					{
-						cube([CableGuideHeight(), PalmHoleWidth()*2, Length]);
+						cube([CableGuideHeight()+PlasticWidth()*1.2, PalmHoleWidth()*2, Length]);
 					}
 				}
 				union()
@@ -47,6 +52,25 @@ module BasePalmCableGuide(Length=10)
 					{
 						cylinder(r=PalmHoleWidth()/2, h=Length+2, $fn=50);
 					}
+					translate([-CableGuideHeight()*1.5,-PalmHoleWidth()/2,-1])
+					{
+						cube([CableGuideHeight(), PalmHoleWidth(), Length+2,]);
+					}
+					
+					if (Length > 10)
+					{
+						for (i = [1:floor(Length/10)])
+						{
+							translate([-CableGuideHeight(),0,9.5*i])
+							{
+								rotate([0,90,0])
+								{
+									cylinder(r=PalmHoleWidth()/1.5, h=CableGuideHeight()*1.5, $fn=50);
+								}
+							}	
+						}
+					}
+				else{}
 				}
 			}
 		}
@@ -164,9 +188,12 @@ module Palm()
 					{
 						cube([PalmLength()-HingeDepth()-PlasticWidth()+1,PalmWidth()-PlasticWidth()*2, PalmHeight()-PlasticWidth()+1]);
 					}
+					translate([PalmLength()*.4, PalmWidth()/2, -1])
+					{
+						cylinder(r=AirLineWidth()/2, h=PalmHeight(), $fn=6);
+					}
 
 //these are the holes for the cables, they ought to be made into a function
-//also not sure what this one is doing up here--look into this later
 					PalmHole();				
 					translate([0,FingerSpace(),0])
 					{
@@ -262,13 +289,9 @@ module Palm()
 			BentPalmCableGuide(10,FingerSpace()*2.6,32.6);
 		}
 //thumb guide
-		translate([22,PalmWidth()/2+7,0])
+		translate([12,PalmWidth()/2+7,0])
 		{
-			AngledPalmCableGuide(11, 0);
-		}
-		translate([25,PalmWidth()/2+6,0])
-		{
-			AngledPalmCableGuide(24, 90);
+			AngledPalmCableGuide(26, 120);
 		}
 		translate([22,PalmWidth()/3.6,0])
 		{

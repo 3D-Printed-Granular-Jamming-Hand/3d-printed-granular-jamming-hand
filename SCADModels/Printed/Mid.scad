@@ -4,19 +4,15 @@ use <../Purchased/RubberBand.scad>
 
 function JointPinBaseDiameter(tolerance=0)=5-tolerance;
 function JointPinEndDiameter(tolerance=0)=1-tolerance;
-function GenericPinDiameter(tolerance=0)=2.5+tolerance;
+function GenericPinDiameter(tolerance=0)=2.5+tolerance; //pin at fingertip
 function HingeDepth(tolerance=0)=11+tolerance;
 
 function JointClearance(tolerance=0)=3;
-function PinClearance(tolerance=0)=0.3; //usually 1.5
+function PinClearance(tolerance=0)=0.3; 
 
 function FingerTipLength(tolerance=0)=17.4+tolerance;
 function FingerMidLength(tolerance=0)=26.33+tolerance;
-
 function FingerBaseLength()=44.63;
-
-		
-
 
 function FingerWidth(tolerance=0)=19.75+tolerance;
 function FingerHeight(tolerance=0)=17+tolerance; // made shorter, usually 19.75 though
@@ -26,8 +22,6 @@ function PlasticWidth(tolerance=0)=FingerWidth(tolerance)/8;
 
 //get it to support tolerance properly again (probably broke this a little)
 //modify it so all fingers work from the same file
-
-
 //knock out all the mid stuff
 
 
@@ -254,7 +248,6 @@ module FingerTip()
 //FingerTip();
 
 
-
 //to check that the effective length is correct
 //translate([HingeDepth()/2, 0, 0])
 //{
@@ -357,7 +350,6 @@ module FingerBase()
 		}
 	}
 }
-
 
 
 //FingerBase();
