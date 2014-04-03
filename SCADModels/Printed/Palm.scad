@@ -1,3 +1,4 @@
+use <CommonModules.scad>
 use <Mid.scad>
 use <../Purchased/RubberBand.scad>
 use <../Purchased/High_Low_Screw_As_Bolt.scad>
@@ -15,7 +16,7 @@ function ThumbAngle()= 35; //angle of thumb attachment
 function GuideAngle()=60;
 function CableGuideHeight()=5;
 
-function AirLineWidth(tolerance=1)=11.11+tolerance;
+function AirLineWidth(tolerance=1)=13+tolerance;
 
 
 
@@ -59,18 +60,27 @@ module BasePalmCableGuide(Length=10)
 					
 					if (Length > 10)
 					{
-						for (i = [1:floor(Length/10)])
+						for (i = [1:floor(Length/10)*2])
 						{
-							translate([-CableGuideHeight(),0,9.5*i])
+							translate([-CableGuideHeight(),0,5.5*i])
 							{
 								rotate([0,90,0])
 								{
-									cylinder(r=PalmHoleWidth()/1.5, h=CableGuideHeight()*1.5, $fn=50);
+									cylinder(r=PalmHoleWidth()/2, h=CableGuideHeight()*1.5, $fn=50);
 								}
 							}	
 						}
 					}
-				else{}
+					else
+					{
+						translate([-CableGuideHeight(),0,4])
+						{
+							rotate([0,90,0])
+							{
+								cylinder(r=PalmHoleWidth()/2, h=CableGuideHeight()*1.5, $fn=50);
+							}
+						}	
+					}
 				}
 			}
 		}
@@ -227,7 +237,7 @@ module Palm()
 			{
 				cube([PalmLength(),PalmWidth()-PlasticWidth()*4, PalmHeight()+2]);	
 			}	
-			translate([16,PalmWidth()*.745,-5])
+			translate([14,PalmWidth()*.745,-5])
 			{
 				rotate([0,0,180])
 				{
@@ -263,7 +273,24 @@ module Palm()
 					{
 						translate([10,-15,0])
 						{
-							NegativeHinge();
+							difference()
+							{
+								NegativeHinge();
+								difference()
+								{
+									translate([-FingerWidth()-2,-1,-2])
+									{
+										cube([FingerWidth(),FingerWidth()+2, FingerWidth()+1]);
+									}
+									translate([-FingerWidth()/8,FingerWidth()+1,FingerWidth()/2])
+									{
+										rotate([90,0,0])
+										{
+											cylinder(r=FingerWidth()/2, h=FingerWidth()+2);
+										}
+									}			
+								}									
+							}
 						}
 					}
 				}
@@ -289,13 +316,17 @@ module Palm()
 			BentPalmCableGuide(10,FingerSpace()*2.6,32.6);
 		}
 //thumb guide
-		translate([12,PalmWidth()/2+7,0])
+		translate([19,PalmWidth()/2-6,0])
 		{
-			AngledPalmCableGuide(26, 120);
+			AngledPalmCableGuide(13, 65);
 		}
-		translate([22,PalmWidth()/3.6,0])
+		translate([12,PalmWidth()/2+5,0])
 		{
-			AngledPalmCableGuide(25.9,0);
+			AngledPalmCableGuide(10, 130);
+		}
+		translate([22-10.9,PalmWidth()/3.6,0])
+		{
+			AngledPalmCableGuide(15,0);
 		}
 		translate([-PalmLength()/4.5,0,-PalmHeight()+FingerHeight()])
 		{
