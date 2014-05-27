@@ -1,0 +1,11 @@
+%UIMSG-APPLICATION-ERROR, Parent EMBED_BROWSER_FC_BUTTONS_DA resizing child EMBED_BROWSER_SEARCH_IP (0,0) (124x21) to be partially viewable in (0,0) (124x20)
+%UIMSG-APPLICATION-ERROR, Did not find page <PHTLeft.Folders> in Tab PHTLeft.ProExplorerTab@main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: PHTLeft.ProExplorerTab, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Cannot modify the reverse horizontal placement flag
+%UIMSG-APPLICATION-ERROR, Failed to modify global attributes
+%UIMSG-APPLICATION-ERROR, No device name specified for ui_modify
+%UIMSG-APPLICATION-ERROR, UI_tree_node_expand_Op is obsolete - use UI_item_modify_Op
+%UIMSG-APPLICATION-ERROR, Failed to load resource dll C:\Program Files\PTC\Creo Elements\Pro5.0\../../libs/prowtlibs/text/compiled_resource/prowtlibs_resources.dll
+%UIMSG-APPLICATION-ERROR, Failed to load resource dll C:\Program Files\PTC\Creo Elements\Pro5.0\../../proe/uitools/text/compiled_resource/uitools_resources.dll
+%UIMSG-APPLICATION-ERROR, Failed to load resource dll C:\Program Files\PTC\Creo Elements\Pro5.0\../../text/compiled_resource/.._resources.dll
+%UIMSG-APPLICATION-ERROR, UI_tree_node_expand_Op is obsolete - use UI_item_modify_Op
