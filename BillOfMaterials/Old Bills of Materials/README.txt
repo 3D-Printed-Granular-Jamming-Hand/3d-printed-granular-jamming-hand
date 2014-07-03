@@ -1,1 +1,0 @@
-This folder contains the bill of materials, all the non-printable parts that need to be ordered to make the hand. It should also include sourcing information for everything included in the bill of materials.

@@ -1,0 +1,1 @@
+This contains some basic programs for hand demos, where the the hand mimics the motion of a rotary potentiometer and the vacuum is controlled by a pushbutton.
